@@ -4,7 +4,7 @@ import PostContainer from "./PostContainer";
 export default function PostApp(){
 
     const[data, setData] = useState([]);
-    const [loading, setLoading]  =useState ({});
+    const [toloading, setLoading]  =useState ({});
      const [newPost,setNewPost] = useState({ title: "", body: ""});
      const URL = "https://jsonplaceholder.typicode.com/posts";
 
@@ -12,7 +12,7 @@ export default function PostApp(){
       useEffect(() => {
 
         fetchPosts();
-      }, []);
+      }, []); 
 
     const fetchPosts = async () => {
         const response = await fetch(URL);
@@ -45,7 +45,7 @@ export default function PostApp(){
     return(
         <div>
             <h1>Fake API App</h1>
-            {loading && <h2>Loading...</h2>}
+            {toloading && <h2>Loading...</h2>}
             <PostForm 
             handleOnChange={handleOnChange}
             handleOnSubmit={handleOnSubmit}
