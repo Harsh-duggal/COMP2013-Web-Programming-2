@@ -1,10 +1,25 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import PostForm from "./PostForm";
 import PostContainer from "./PostContainer";
 export default function PostApp(){
 
     const[data, setData] = useState([]);
-    const [newPost,setNewPost] = useState({ title: "", body: ""});
+    const [loading, setLoading]  =useState ({});
+     const [newPost,setNewPost] = useState({ title: "", body: ""});
+     const URL = "https://jsonplaceholder.typicode.com/posts";
+
+
+      useEffect(() => {
+
+        fetchPosts();
+      }, []);
+
+    const fetchPosts = async () => {
+        const response = await fetch(URL);
+        const posts = await response.json();
+        setData(posts);
+        setLoading(false);
+      };
 
 
     const handleOnChange = (e) => {
@@ -30,6 +45,7 @@ export default function PostApp(){
     return(
         <div>
             <h1>Fake API App</h1>
+            {loading && <h2>Loading...</h2>}
             <PostForm 
             handleOnChange={handleOnChange}
             handleOnSubmit={handleOnSubmit}
@@ -38,5 +54,5 @@ export default function PostApp(){
             />
             <PostContainer posts={data} />
         </div>
-    )
+    );
 }
